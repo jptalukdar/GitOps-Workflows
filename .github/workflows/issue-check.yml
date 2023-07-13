@@ -29,6 +29,6 @@ jobs:
           git checkout -B "ID-${{ (github.event.issue.id) }}-automated-branch"
           git add *.json
           git commit -m "[SKIP CI] Automated PR"
-          git push
+          git push --set-upstream origin "ID-${{ (github.event.issue.id) }}-automated-branch"
           gh pr create --title "Automated Deployment PR" --body "PR raised from Issue - ${{ (github.event.issue.id) }} - ${{ (github.event.issue.url) }}" 
    
