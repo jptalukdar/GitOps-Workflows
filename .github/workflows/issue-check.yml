@@ -21,13 +21,14 @@ jobs:
           issue_data: ${{ toJson(github.event.issue.body) }}
         run: | 
           python --version
-          echo "Issue body: `${{ toJson(github.event.issue.body) }}`" > issue_data
           echo "Deploy main from commit | ${{ github.event.head_commit.message }} |"
-          python src/raise.py
-      # - run: |
-      #     git config --global user.name 'Platform Automation Bot'
-      #     git config --global user.email 'platform.bot@kopoutech.com'
-      #     git add *.json
-      #     git commit -m "[SKIP CI] Automated PR"
-      #     git push
+          python src/create_json.py
+      - run: |
+          git config --global user.name 'Platform Automation Bot'
+          git config --global user.email 'platform.bot@kopoutech.com'
+          git checkout -B "ID-${{ (github.event.issue.id) }}-automated-branch"
+          git add *.json
+          git commit -m "[SKIP CI] Automated PR"
+          git push
+          gh pr create --title "Automated Deployment PR" --body "PR raised from Issue - ${{ (github.event.issue.id) }} - ${{ (github.event.issue.url) }}" 
    

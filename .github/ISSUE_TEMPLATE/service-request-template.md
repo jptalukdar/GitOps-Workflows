@@ -7,14 +7,20 @@ assignees: ''
 
 ---
 
-Request Header:
+Request Header: 
+
+Request Name: 
 
 Request Config:
 
-[CONFIG_BEGIN]
 ```json
+[CONFIG_BEGIN]
 {
  "key" : "value"
 }
-```
 [CONFIG_END]
+```
+
+Note: Do not remove the markers as it will fail the request. Add any additional information below.
+
+Additional Information: 
