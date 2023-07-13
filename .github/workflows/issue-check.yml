@@ -19,8 +19,8 @@ jobs:
       - run: | 
           python --version
           echo "Issue title: ${{ github.event.issue.title }}"
-          echo "Issue body: ${{ github.event.issue.body }}"
-          echo "Issue body: ${{ github.event.issue.body }}" > issue_data
+          echo "Issue body: `${{ toJson(github.event.issue.body) }}`"
+          echo "Issue body: `${{ toJson(github.event.issue.body) }}`" > issue_data
           echo "Deploy main from commit | ${{ github.event.head_commit.message }} |"
           python src/raise.py
       # - run: |
