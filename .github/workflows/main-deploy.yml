@@ -1,12 +1,12 @@
 name: Main workflow
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
 
 jobs:
-  test_pull_request:
+  deploy_main:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
