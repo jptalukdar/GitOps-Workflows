@@ -1,0 +1,32 @@
+name: Main workflow
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  deploy_main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+      - run: | 
+          python --version
+          echo "Issue title: ${{ github.event.issue.title }}"
+          echo "Issue body: ${{ github.event.issue.body }}"
+          echo "Issue body: ${{ github.event.issue.body }}" > issue_data
+          echo "Deploy main from commit | ${{ github.event.head_commit.message }} |"
+          python src/raise.py
+      # - run: |
+      #     git config --global user.name 'Platform Automation Bot'
+      #     git config --global user.email 'platform.bot@kopoutech.com'
+      #     git add *.json
+      #     git commit -m "[SKIP CI] Automated PR"
+      #     git push
+   
