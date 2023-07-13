@@ -23,7 +23,9 @@ jobs:
           python --version
           echo "Deploy main from commit | ${{ github.event.head_commit.message }} |"
           python src/create_json.py
-      - run: |
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
           git config --global user.name 'Platform Automation Bot'
           git config --global user.email 'platform.bot@kopoutech.com'
           git checkout -B "ID-${{ (github.event.issue.id) }}-automated-branch"
