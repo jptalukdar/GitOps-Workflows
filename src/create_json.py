@@ -16,8 +16,8 @@ def extract(data, prefix, suffix) -> str:
     if str(ex).find("substring not found") != -1:
       raise Exception(f"Certain markers are missing |{prefix}|. Create a new request")
 
-# data = os.environ["issue_data"]
-data_raw =  '"Request Header:\\r\\n\\r\\nRequest Name: test-deployment \\r\\nRequest Config:\\r\\n\\r\\n[CONFIG_BEGIN]\\r\\n```json\\r\\n{\\r\\n \\"key\\" : \\"value\\"\\r\\n}\\r\\n```\\r\\n[CONFIG_END]\\r\\n"'
+data_raw = os.environ["issue_data"]
+# data_raw =  '"Request Header:\\r\\n\\r\\nRequest Name: test-deployment \\r\\nRequest Config:\\r\\n\\r\\n[CONFIG_BEGIN]\\r\\n```json\\r\\n{\\r\\n \\"key\\" : \\"value\\"\\r\\n}\\r\\n```\\r\\n[CONFIG_END]\\r\\n"'
 
 # start = data_raw.index("[CONFIG_BEGIN]") + len("[CONFIG_BEGIN]")
 # end = data_raw.index("[CONFIG_END]")
