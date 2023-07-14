@@ -24,7 +24,6 @@ jobs:
           issue_data: ${{ toJson(github.event.issue.body) }}
         run: | 
           python --version
-          echo "Deploy main from commit | ${{ github.event.head_commit.message }} |"
           python src/create_json.py
       - env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
