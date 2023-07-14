@@ -39,7 +39,7 @@ json_data = extract(parsed_data,"[CONFIG_BEGIN]","[CONFIG_END]")
 print(f"Name:{name}|")
 
 json_data = json_data.strip(" \n").lstrip(" ` ").rstrip(" ` ").removeprefix("json")
-json_data = json_data.replace('\\"','"')
+json_data = json_data.replace('\\"','"').replace("\\n","\n")
 
 # print("2:", json_data)
 
@@ -53,4 +53,4 @@ dir_name = os.path.join("deployments",name)
 os.mkdir(dir_name)
 
 with open(os.path.join(dir_name,"config.json"), "w") as fp:
-  json.dump(json_data,fp)
+  json.dump(data,fp)
