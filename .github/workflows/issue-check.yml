@@ -40,10 +40,10 @@ jobs:
             git add *.json
             git commit -m "[SKIP CI] Automated PR"
             git push --set-upstream origin "$BRANCH_NAME"
-            gh pr create --title "Automated Deployment PR | Closes #${{ (github.event.issue.number) }}" --body "PR raised from Issue - ${{ (github.event.issue.number) }} - ${{ (github.event.issue.url) }}" > pr-url.nokeep
+            gh pr create --title "Automated Deployment PR | Closes #${{ (github.event.issue.number) }}" --body "Closes #${{ (github.event.issue.number) }} PR raised from Issue - ${{ (github.event.issue.number) }} - ${{ (github.event.issue.url) }}" > pr-url.nokeep
             PR_URL=$(cat pr-url.nokeep)
             gh issue comment ${{ (github.event.issue.number) }} \
-              --body "A successful PR has been raised against your request. Action Url : $ACTION_URL | Branch - $BRANCH_NAME | PR Link: $PR_URL"
+              --body "A successful PR has been raised against your request. Action Url : $ACTION_URL | Branch - $BRANCH_NAME | PR Link: $PR_URL .\n Your request will be provisioned once PR is merged"
           fi
            
           if [ -f failed_error.nokeep ]; then
