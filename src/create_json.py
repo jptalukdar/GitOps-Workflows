@@ -50,8 +50,6 @@ def create_config():
 
   print(data)
 
-  import os
-
   dir_name = os.path.join("deployments",name)
   os.mkdir(dir_name)
 
