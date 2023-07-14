@@ -73,3 +73,6 @@ if __name__ == "__main__":
     mark_success()
   except Exception as ex:
     mark_failed()
+    print(str(ex))
+    raise ex
+    exit(1)
