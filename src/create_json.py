@@ -72,7 +72,7 @@ if __name__ == "__main__":
     create_config()
     mark_success()
   except Exception as ex:
-    mark_failed()
+    mark_failed(str(ex))
     print(str(ex))
     raise ex
     exit(1)
