@@ -10,6 +10,7 @@ permissions:
 jobs:
   deploy_main:
     runs-on: ubuntu-latest
+    if: ${{ startswith(github.event.issue.title, '[SERVICE REQUEST]' ) }}
     steps:
       - uses: actions/checkout@v3
         with:
