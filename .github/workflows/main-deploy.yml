@@ -22,9 +22,11 @@ jobs:
           echo "Deploy main from commit ${{ github.event.head_commit.message }}"
           python src/invoke.py
       - run: |
-          git config --global user.name 'Platform Automation Bot'
-          git config --global user.email 'platform.bot@kopoutech.com'
-          git add *.keep
-          git commit -m "[SKIP CI] Automated deployment check"
-          git push
+          if [ -f changed.nokeep ]; then
+            git config --global user.name 'Platform Automation Bot'
+            git config --global user.email 'platform.bot@kopoutech.com'
+            git add *.keep
+            git commit -m "[SKIP CI] Automated deployment check"
+            git push
+          fi
    

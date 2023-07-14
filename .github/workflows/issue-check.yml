@@ -6,6 +6,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write 
 
 jobs:
   deploy_main:
@@ -30,9 +31,11 @@ jobs:
         run: |
           git config --global user.name 'Platform Automation Bot'
           git config --global user.email 'platform.bot@kopoutech.com'
-          git checkout -B "ID-${{ (github.event.issue.id) }}-automated-branch"
+          git checkout -B "ID-${{ (github.event.issue.number) }}-automated-branch"
           git add *.json
           git commit -m "[SKIP CI] Automated PR"
-          git push --set-upstream origin "ID-${{ (github.event.issue.id) }}-automated-branch"
-          gh pr create --title "Automated Deployment PR" --body "PR raised from Issue - ${{ (github.event.issue.id) }} - ${{ (github.event.issue.url) }}" 
+          git push --set-upstream origin "ID-${{ (github.event.issue.number) }}-automated-branch"
+          gh pr create --title "Automated Deployment PR #${{ github.run_number }}" --body "PR raised from Issue - ${{ (github.event.issue.number) }} - ${{ (github.event.issue.url) }}" 
+          gh issue comment ${{ (github.event.issue.number) }} --body "Your issue is being processed using GitHub actions #${{ github.run_number }}. Branch - ID-${{ (github.event.issue.number) }}-automated-branch"
+           
    

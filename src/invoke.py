@@ -23,6 +23,11 @@ class Deployment():
       fp.write(self.base_name+"\n")
       fp.write(str(datetime.now()))
 
+def mark_changed():
+  with open(os.path.join("changed.nokeep") , "w") as fp:
+      fp.write("\n")
+      fp.write(str(datetime.now()))
+
 def read_json(path: str) -> dict:
   with open(path, "r") as fp:
     data = json.load(fp)
@@ -31,7 +36,7 @@ def read_json(path: str) -> dict:
 def get_deployments(root_dir):
   deployments = []
   for root, dirs, files in os.walk(root_dir):
-    print("Found deployments: ",dirs)
+    print("Found deployments: ",dirs, " on ", root_dir)
     for dir in dirs:
       print("Parsing Directory: " + os.path.join(root, dir))
       d_ = Deployment()
@@ -49,7 +54,9 @@ def get_deployments(root_dir):
 
 def process_deployment(deploy_list: list[Deployment]) -> None:
   for d in deploy_list:
+    print(f"Deploying {d.base_name}")
     d.deploy()
+    mark_changed()
 
 if __name__ == "__main__":
   d_list = get_deployments("deployments")
