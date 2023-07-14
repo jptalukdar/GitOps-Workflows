@@ -29,17 +29,26 @@ jobs:
       - env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name 'Platform Automation Bot'
-          git config --global user.email 'platform.bot@kopoutech.com'
-          BRANCH_NAME='${{ (github.event.issue.number) }}-ID-automated-branch'
-          git checkout -B "$BRANCH_NAME"
-          git add *.json
-          git commit -m "[SKIP CI] Automated PR"
-          git push --set-upstream origin "$BRANCH_NAME"
-          gh pr create --title "Automated Deployment PR | Closes #${{ (github.event.issue.number) }}" --body "PR raised from Issue - ${{ (github.event.issue.number) }} - ${{ (github.event.issue.url) }}" > pr-url.nokeep
-          PR_URL=$(cat pr-url.nokeep)
           ACTION_URL='${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}'
           gh issue comment ${{ (github.event.issue.number) }} \
-            --body "Your issue is being processed using GitHub actions $ACTION_URL. Branch - $BRANCH_NAME . PR Link: $PR_URL"
+              --body "Your issue is being processed using GitHub actions $ACTION_URL. Branch - $BRANCH_NAME . PR Link: $PR_URL"
+          if [ -f created.nokeep ]; then
+            git config --global user.name 'Platform Automation Bot'
+            git config --global user.email 'platform.bot@kopoutech.com'
+            BRANCH_NAME='${{ (github.event.issue.number) }}-ID-automated-branch'
+            git checkout -B "$BRANCH_NAME"
+            git add *.json
+            git commit -m "[SKIP CI] Automated PR"
+            git push --set-upstream origin "$BRANCH_NAME"
+            gh pr create --title "Automated Deployment PR | Closes #${{ (github.event.issue.number) }}" --body "PR raised from Issue - ${{ (github.event.issue.number) }} - ${{ (github.event.issue.url) }}" > pr-url.nokeep
+            PR_URL=$(cat pr-url.nokeep)
+            gh issue comment ${{ (github.event.issue.number) }} \
+              --body "A successful PR has been raised against your request. Action Url : $ACTION_URL | Branch - $BRANCH_NAME | PR Link: $PR_URL"
+          fi
            
+          if [ -f failed_error.nokeep ]; then
+            ERROR_DATA=$(cat failed_error.nokeep)
+            gh issue comment ${{ (github.event.issue.number) }} \
+              --body "We are sorry to inform you that your request has failed. Error message received - [$ERROR_DATA] - See $ACTION_URL "
+          fi
    
